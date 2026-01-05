@@ -6,16 +6,13 @@ def game():
     side = chooseSide()  
 
     while True:
-        print(sf.get_engine_parameters())
         print(sf.get_board_visual())
-        
-        if side == "black": # If the user is playing black
+        while side == "black": # If the user is playing black
             computerMove = sf.get_best_move()
-            print("Stockfish plays: ", computerMove)
+            print("Stockfish plays: " + computerMove + "\n")
             sf.make_moves_from_current_position([computerMove])
             print (sf.get_board_visual(False))
             myMove = makeMove()
-
             if myMove == "resign":
                 resign()
                 return
@@ -26,7 +23,7 @@ def game():
             else:
                 print("Invalid move sequence!")
         
-        else: # If the user is playing white
+        while side == "white": # If the user is playing white
             myMove = makeMove()
             if myMove == "resign":
                 resign()
@@ -34,7 +31,7 @@ def game():
             if sf.is_move_correct(myMove) == True:
                 sf.make_moves_from_current_position([myMove])
                 computerMove = sf.get_best_move()
-                print("Stockfish plays: ", computerMove)
+                print("\nStockfish plays: ", computerMove)
                 sf.make_moves_from_current_position([computerMove])
                 print (sf.get_board_visual())
             else:
