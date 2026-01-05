@@ -1,20 +1,28 @@
 from stockfish import Stockfish
-from ..screens.settings import elo
+from chess_tui.screens.settings import getSkill
 
-sf = Stockfish(path="your-path-here")
 
-sf.set_elo_rating(elo)
+def engine(): 
+    sf = Stockfish(path="/Users/abdel-rahmanmobarak/Desktop/stockfish/stockfish-macos-m1-apple-silicon")
+    sf.set_skill_level(getSkill())
+    print(getSkill())
 
-print(sf.get_board_visual())
 
-while True:
-    print('Enter move: ')
-    myMove = input()
+    print(sf.get_board_visual())
 
-    sf.make_moves_from_current_position([myMove])
+    while True:
+        myMove = input("Enter your move: ")
+        if myMove == "quit":
+            return
 
-    computerMove = sf.get_best_move()
-    print("Stockfish plays: ", computerMove)
+        if sf.is_move_correct(myMove) == True:
+            sf.make_moves_from_current_position([myMove])
+            computerMove = sf.get_best_move()
 
-    sf.make_moves_from_current_position([computerMove])
-    print (sf.get_board_visual())
+            print("Stockfish plays: ", computerMove)
+            sf.make_moves_from_current_position([computerMove])
+
+            sf.make_moves_from_current_position([myMove])
+            print (sf.get_board_visual())
+        else:
+            print("Invalid move sequence!")
