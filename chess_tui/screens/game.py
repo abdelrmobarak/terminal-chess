@@ -3,16 +3,13 @@ from chess_tui.app.actions import *
 
 def game():
     sf = engine()
-    
-    side = chooseSide()
-    if side == "black":
-        sf.flip()
-    
+    side = chooseSide()  
+
     while True:
         print(sf.get_engine_parameters())
         print(sf.get_board_visual())
         
-        if side == "black":
+        if side == "black": # If the user is playing black
             computerMove = sf.get_best_move()
             print("Stockfish plays: ", computerMove)
             sf.make_moves_from_current_position([computerMove])
@@ -29,7 +26,7 @@ def game():
             else:
                 print("Invalid move sequence!")
         
-        else: 
+        else: # If the user is playing white
             myMove = makeMove()
             if myMove == "resign":
                 resign()
@@ -43,4 +40,3 @@ def game():
             else:
                 print("Invalid move sequence!")
 
-# Fix this
